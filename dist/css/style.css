@@ -10,7 +10,7 @@ body {
   max-width: 500px;
   border-radius: 5px;
   text-align: center;
-  margin-top: 20vh;
+  margin: 20vh auto 0;
 }
 
 select {

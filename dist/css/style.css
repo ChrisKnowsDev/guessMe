@@ -1,4 +1,18 @@
 body {
-  background: maroon;
+  background: linear-gradient(to right bottom, maroon, #333);
   font-family: 'Gayathri', sans-serif;
+  height: 100vh;
+}
+
+.container {
+  background: #f4f4f4;
+  padding: 2rem;
+  max-width: 500px;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20vh;
+}
+
+select {
+  color: grey;
 }

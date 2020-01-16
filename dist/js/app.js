@@ -30,14 +30,22 @@ submitBtn.addEventListener('click', () => {
     userInput.disabled = true;
   } else {
     guessesLeft -= 1;
-    setMessage(
-      `${guess} is not correct, you have ${guessesLeft} guesses left`,
-      'red'
-    );
+    if (guess < winningNumber) {
+      setMessage(
+        `The winning number is greater than ${guess}, you have ${guessesLeft} guesses left`,
+        'red'
+      );
+    } else if (guess > winningNumber) {
+      setMessage(
+        `The winning number is less than ${guess}, you have ${guessesLeft} guesses left`,
+        'red'
+      );
+    }
     userInput.value = '';
     userInput.focus();
   }
 
+  // Game over
   if (guessesLeft === 0) {
     setMessage('GAME OVER', 'red');
     userInput.disabled = true;

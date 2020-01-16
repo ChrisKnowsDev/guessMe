@@ -20,35 +20,44 @@ minNum.textContent = min;
 // Focus cursor in guess input
 userInput.focus();
 
+// Reload page when play again is clicked
+container.addEventListener('mousedown', function (e) {
+  if (e.target.classList.contains('play-again')) {
+    window.location.reload();
+  }
+})
+
 // Listen for user submit
 submitBtn.addEventListener('click', () => {
   let guess = parseInt(userInput.value);
+  userInput.focus();
 
-  // Check if won
-  if (guess === winningNumber) {
-    setMessage(`${winningNumber} is correct, you won!`, 'green');
-    userInput.disabled = true;
-  } else {
-    guessesLeft -= 1;
-    if (guess < winningNumber) {
-      setMessage(
-        `The winning number is greater than ${guess}, you have ${guessesLeft} guesses left`,
-        'red'
-      );
-    } else if (guess > winningNumber) {
-      setMessage(
-        `The winning number is less than ${guess}, you have ${guessesLeft} guesses left`,
-        'red'
-      );
-    }
+  // Validate user input
+  if (isNaN(guess) || guess < min || guess > max) {
+    setMessage(`Your guess must be between ${min} and ${max}`, 'red');
     userInput.value = '';
-    userInput.focus();
-  }
+  } else {
+    // Check if won
+    if (guess === winningNumber) {
+      setMessage(`${winningNumber} is correct, You won!`, 'green');
+      userInput.disabled = true;
+      playAgain();
+    } else {
+      guessesLeft -= 1;
 
-  // Game over
-  if (guessesLeft === 0) {
-    setMessage('GAME OVER', 'red');
-    userInput.disabled = true;
+      if (guess < winningNumber) {
+        setMessage(`The winning number is greater than ${guess}, you have ${guessesLeft} guesses left`, 'red');
+      } else if (guess > winningNumber) {
+        setMessage(`The winning number is less than ${guess}, you have ${guessesLeft} guesses left`, 'red');
+      }
+
+      userInput.value = '';
+      if (guessesLeft === 0) {
+        setMessage(`You have ${guessesLeft} guesses left, Game Over!`, 'red');
+        userInput.disabled = true;
+        playAgain();
+      }
+    }
   }
 });
 
@@ -57,4 +66,10 @@ function setMessage(msg, color) {
   message.textContent = msg;
   message.style.color = color;
   userInput.style.borderColor = color;
+}
+
+// Play again
+function playAgain() {
+  submitBtn.value = 'Play Again';
+  submitBtn.className += ' play-again';
 }

@@ -28,6 +28,19 @@ submitBtn.addEventListener('click', () => {
   if (guess === winningNumber) {
     setMessage(`${winningNumber} is correct, you won!`, 'green');
     userInput.disabled = true;
+  } else {
+    guessesLeft -= 1;
+    setMessage(
+      `${guess} is not correct, you have ${guessesLeft} guesses left`,
+      'red'
+    );
+    userInput.value = '';
+    userInput.focus();
+  }
+
+  if (guessesLeft === 0) {
+    setMessage('GAME OVER', 'red');
+    userInput.disabled = true;
   }
 });
 
@@ -35,5 +48,5 @@ submitBtn.addEventListener('click', () => {
 function setMessage(msg, color) {
   message.textContent = msg;
   message.style.color = color;
-  userInput.style.borderColor = 'green';
+  userInput.style.borderColor = color;
 }

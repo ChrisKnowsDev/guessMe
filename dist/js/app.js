@@ -16,3 +16,24 @@ let guessesLeft = 3,
 // Set min & max numbers in UI
 maxNum.textContent = max;
 minNum.textContent = min;
+
+// Focus cursor in guess input
+userInput.focus();
+
+// Listen for user submit
+submitBtn.addEventListener('click', () => {
+  let guess = parseInt(userInput.value);
+
+  // Check if won
+  if (guess === winningNumber) {
+    setMessage(`${winningNumber} is correct, you won!`, 'green');
+    userInput.disabled = true;
+  }
+});
+
+// Set message
+function setMessage(msg, color) {
+  message.textContent = msg;
+  message.style.color = color;
+  userInput.style.borderColor = 'green';
+}

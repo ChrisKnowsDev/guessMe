@@ -11,11 +11,28 @@ const container = document.querySelector('.container'),
 let guessesLeft = 3,
   min = 1,
   max = 10,
-  winningNumber = 5;
+  winningNumber = randomNumber(min, max),
+  guess;
+
 
 // Set min & max numbers in UI
-maxNum.textContent = max;
 minNum.textContent = min;
+
+// Set difficulty
+difficulty.addEventListener('change', function () {
+  if (difficulty.value === 'medium') {
+    max = 50;
+    maxNum.textContent = max;
+    winningNumber = randomNumber(min, max);
+  } else if (difficulty.value === 'hard') {
+    max = 100;
+    maxNum.textContent = max;
+    winningNumber = randomNumber(min, max);
+  } else {
+    max = 10;
+    maxNum.textContent = max;
+  }
+});
 
 // Focus cursor in guess input
 userInput.focus();
@@ -29,7 +46,7 @@ container.addEventListener('mousedown', function (e) {
 
 // Listen for user submit
 submitBtn.addEventListener('click', () => {
-  let guess = parseInt(userInput.value);
+  guess = parseInt(userInput.value);
   userInput.focus();
 
   // Validate user input
@@ -53,7 +70,7 @@ submitBtn.addEventListener('click', () => {
 
       userInput.value = '';
       if (guessesLeft === 0) {
-        setMessage(`You have ${guessesLeft} guesses left, Game Over!`, 'red');
+        setMessage(`The winning number was ${winningNumber}, Game Over!`, 'red');
         userInput.disabled = true;
         playAgain();
       }
@@ -72,4 +89,9 @@ function setMessage(msg, color) {
 function playAgain() {
   submitBtn.value = 'Play Again';
   submitBtn.className += ' play-again';
+}
+
+// Random number
+function randomNumber() {
+  return Math.floor(Math.random() * (max - min) + min);
 }
